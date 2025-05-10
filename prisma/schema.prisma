@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and user management
+model User {
+  id        String      @id @default(uuid())
+  email     String      @unique
+  password  String
+  name      String
+  role      UserRole    @default(EMPLOYEE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  attendance Attendance[]
+}
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+}
+
+model Attendance {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  photo_url   String
+  duration    Int?        // Duration in minutes
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
+}
