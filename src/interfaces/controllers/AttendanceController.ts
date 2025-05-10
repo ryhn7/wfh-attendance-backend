@@ -9,6 +9,7 @@ import {
     GetAttendanceByIdUseCase,
     UpdateAttendanceUseCase
 } from '../../domain/usecases/AttendanceUseCases';
+import { ApiResponse } from '../../shared/utils/apiResponse';
 
 export class AttendanceController {
     constructor(
@@ -27,9 +28,7 @@ export class AttendanceController {
                 // Only admins can create attendance entries for other users
                 if (req.body.userId !== req.user?.id &&
                     req.user?.role !== 'ADMIN') {
-                    res.status(403).json({
-                        error: 'You are not authorized to create attendance records for other users'
-                    });
+                    ApiResponse.forbidden(res, 'You are not authorized to create attendance records for other users');
                     return;
                 }
 
@@ -39,15 +38,12 @@ export class AttendanceController {
                 );
                 const attendance = await createAttendanceUseCase.execute(req.body);
 
-                res.status(201).json({
-                    success: true,
-                    data: attendance,
-                });
+                ApiResponse.created(res, attendance, 'Attendance record created successfully');
             } catch (error) {
                 if (error instanceof Error) {
-                    res.status(400).json({ error: error.message });
+                    ApiResponse.error(res, error.message);
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -64,25 +60,20 @@ export class AttendanceController {
                 // Check if user has permission to view this attendance record
                 if (attendance.userId !== req.user?.id &&
                     req.user?.role !== 'ADMIN') {
-                    res.status(403).json({
-                        error: 'You are not authorized to view this attendance record'
-                    });
+                    ApiResponse.forbidden(res, 'You are not authorized to view this attendance record');
                     return;
                 }
 
-                res.status(200).json({
-                    success: true,
-                    data: attendance,
-                });
+                ApiResponse.success(res, attendance);
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'Attendance record not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -96,9 +87,7 @@ export class AttendanceController {
                 // Check if user has permission to view these attendance records
                 if (userId !== req.user?.id &&
                     req.user?.role !== 'ADMIN') {
-                    res.status(403).json({
-                        error: 'You are not authorized to view attendance records for this user'
-                    });
+                    ApiResponse.forbidden(res, 'You are not authorized to view attendance records for this user');
                     return;
                 }
 
@@ -108,19 +97,16 @@ export class AttendanceController {
                 );
                 const attendances = await getAttendanceByUserIdUseCase.execute(userId);
 
-                res.status(200).json({
-                    success: true,
-                    data: attendances,
-                });
+                ApiResponse.success(res, attendances);
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'User not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -138,28 +124,23 @@ export class AttendanceController {
                 // Check if user has permission to update this attendance record
                 if (attendance.userId !== req.user?.id &&
                     req.user?.role !== 'ADMIN') {
-                    res.status(403).json({
-                        error: 'You are not authorized to update this attendance record'
-                    });
+                    ApiResponse.forbidden(res, 'You are not authorized to update this attendance record');
                     return;
                 }
 
                 const updateAttendanceUseCase = new UpdateAttendanceUseCase(this._attendanceRepository);
                 const updatedAttendance = await updateAttendanceUseCase.execute(id, req.body);
 
-                res.status(200).json({
-                    success: true,
-                    data: updatedAttendance,
-                });
+                ApiResponse.success(res, updatedAttendance, 'Attendance record updated successfully');
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'Attendance record not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -177,28 +158,23 @@ export class AttendanceController {
                 // Check if user has permission to delete this attendance record
                 if (attendance.userId !== req.user?.id &&
                     req.user?.role !== 'ADMIN') {
-                    res.status(403).json({
-                        error: 'You are not authorized to delete this attendance record'
-                    });
+                    ApiResponse.forbidden(res, 'You are not authorized to delete this attendance record');
                     return;
                 }
 
                 const deleteAttendanceUseCase = new DeleteAttendanceUseCase(this._attendanceRepository);
                 await deleteAttendanceUseCase.execute(id);
 
-                res.status(200).json({
-                    success: true,
-                    message: 'Attendance record deleted successfully',
-                });
+                ApiResponse.success(res, null, 'Attendance record deleted successfully');
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'Attendance record not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -209,22 +185,19 @@ export class AttendanceController {
             try {
                 // Only admin can list all attendance records
                 if (req.user?.role !== 'ADMIN') {
-                    res.status(403).json({ error: 'Unauthorized to view all attendance records' });
+                    ApiResponse.forbidden(res, 'Unauthorized to view all attendance records');
                     return;
                 }
 
                 const getAllAttendancesUseCase = new GetAllAttendancesUseCase(this._attendanceRepository);
                 const attendances = await getAllAttendancesUseCase.execute();
 
-                res.status(200).json({
-                    success: true,
-                    data: attendances,
-                });
+                ApiResponse.success(res, attendances);
             } catch (error) {
                 if (error instanceof Error) {
-                    res.status(400).json({ error: error.message });
+                    ApiResponse.error(res, error.message);
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };

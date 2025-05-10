@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
+import { ApiResponse } from '../../shared/utils/apiResponse';
 
 export const errorHandler = (
     err: Error,
@@ -11,26 +12,35 @@ export const errorHandler = (
 
     // Handle Zod validation errors
     if (err instanceof ZodError) {
-        return res.status(400).json({
-            error: 'Validation error',
-            details: err.errors,
-        });
-    }    // Handle known error types
+        return ApiResponse.error(res, 'Validation error', 400, err.errors);
+    }
+
+    // Handle authentication errors
+    if (err.name === 'AuthenticationError') {
+        return ApiResponse.unauthorized(res, err.message);
+    }
+
+    // Handle authorization errors
+    if (err.name === 'AuthorizationError') {
+        return ApiResponse.forbidden(res, err.message);
+    }
+
+    // Handle known error types
     if (err.message === 'User not found' || err.message === 'Attendance record not found') {
-        return res.status(404).json({ error: err.message });
+        return ApiResponse.notFound(res, err.message);
     }
 
     if (err.message === 'User with this email already exists' ||
         err.message === 'Email is already taken') {
-        return res.status(409).json({ error: err.message });
+        return ApiResponse.error(res, err.message, 409); // Conflict
     }
 
     if (err.message === 'Invalid credentials') {
-        return res.status(401).json({ error: err.message });
+        return ApiResponse.unauthorized(res, err.message);
     }
 
     // Default error handler
-    return res.status(500).json({ error: 'Internal server error' });
+    return ApiResponse.serverError(res, 'Internal server error', err);
 };
 
 export const validateRequest = (schema: any) => {

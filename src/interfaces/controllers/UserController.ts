@@ -10,6 +10,7 @@ import {
 import { UserRepository } from '../../domain/repositories/UserRepository';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { ApiResponse } from '../../shared/utils/apiResponse';
 
 export class UserController {
     constructor(private _userRepository: UserRepository) { }
@@ -23,15 +24,12 @@ export class UserController {
                 // Remove password from response
                 const { password, ...userWithoutPassword } = user;
 
-                res.status(201).json({
-                    success: true,
-                    data: userWithoutPassword,
-                });
+                ApiResponse.created(res, userWithoutPassword, 'User registered successfully');
             } catch (error) {
                 if (error instanceof Error) {
-                    res.status(400).json({ error: error.message });
+                    ApiResponse.error(res, error.message);
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -48,7 +46,7 @@ export class UserController {
                 // Check password
                 const passwordMatch = await bcrypt.compare(password, user.password);
                 if (!passwordMatch) {
-                    res.status(401).json({ error: 'Invalid credentials' });
+                    ApiResponse.unauthorized(res, 'Invalid credentials');
                     return;
                 }
 
@@ -66,8 +64,7 @@ export class UserController {
                     }
                 );
 
-                res.status(200).json({
-                    success: true,
+                ApiResponse.success(res, {
                     token,
                     user: {
                         id: user.id,
@@ -75,16 +72,16 @@ export class UserController {
                         name: user.name,
                         role: user.role
                     }
-                });
+                }, 'Login successful');
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'User not found') {
-                        res.status(401).json({ error: 'Invalid credentials' });
+                        ApiResponse.unauthorized(res, 'Invalid credentials');
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -101,19 +98,16 @@ export class UserController {
                 // Remove password from response
                 const { password, ...userWithoutPassword } = user;
 
-                res.status(200).json({
-                    success: true,
-                    data: userWithoutPassword,
-                });
+                ApiResponse.success(res, userWithoutPassword);
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'User not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -126,7 +120,7 @@ export class UserController {
 
                 // Check if the authenticated user is updating their own profile or is an admin
                 if (req.user?.id !== id && req.user?.role !== 'ADMIN') {
-                    res.status(403).json({ error: 'Unauthorized to update this user' });
+                    ApiResponse.forbidden(res, 'Unauthorized to update this user');
                     return;
                 }
 
@@ -136,19 +130,16 @@ export class UserController {
                 // Remove password from response
                 const { password, ...userWithoutPassword } = user;
 
-                res.status(200).json({
-                    success: true,
-                    data: userWithoutPassword,
-                });
+                ApiResponse.success(res, userWithoutPassword, 'User updated successfully');
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'User not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -161,26 +152,23 @@ export class UserController {
 
                 // Only admin can delete users
                 if (req.user?.role !== 'ADMIN') {
-                    res.status(403).json({ error: 'Unauthorized to delete users' });
+                    ApiResponse.forbidden(res, 'Unauthorized to delete users');
                     return;
                 }
 
                 const deleteUserUseCase = new DeleteUserUseCase(this._userRepository);
                 await deleteUserUseCase.execute(id);
 
-                res.status(200).json({
-                    success: true,
-                    message: 'User deleted successfully',
-                });
+                ApiResponse.success(res, null, 'User deleted successfully');
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'User not found') {
-                        res.status(404).json({ error: error.message });
+                        ApiResponse.notFound(res, error.message);
                     } else {
-                        res.status(400).json({ error: error.message });
+                        ApiResponse.error(res, error.message);
                     }
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
@@ -189,9 +177,9 @@ export class UserController {
     getAllEmployeesController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
-                // Only admin and managers can list all users
+                // Only admin can list all users
                 if (req.user?.role !== 'ADMIN') {
-                    res.status(403).json({ error: 'Unauthorized to view all users' });
+                    ApiResponse.forbidden(res, 'Unauthorized to view all users');
                     return;
                 }
 
@@ -204,15 +192,12 @@ export class UserController {
                     return userWithoutPassword;
                 });
 
-                res.status(200).json({
-                    success: true,
-                    data: usersWithoutPasswords,
-                });
+                ApiResponse.success(res, usersWithoutPasswords);
             } catch (error) {
                 if (error instanceof Error) {
-                    res.status(400).json({ error: error.message });
+                    ApiResponse.error(res, error.message);
                 } else {
-                    res.status(500).json({ error: 'An unexpected error occurred' });
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }
             }
         };
