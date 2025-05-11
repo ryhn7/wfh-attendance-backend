@@ -28,13 +28,17 @@ enum UserRole {
 }
 
 model Attendance {
-  id          String      @id @default(uuid())
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  photo_url   String
-  duration    Int?        // Duration in minutes
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  date            DateTime  @default(now()) @db.Date
+  checkInTime     DateTime  @default(now())
+  checkOutTime    DateTime?
+  checkInPhotoUrl String
+  checkOutPhotoUrl String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@index([userId])
+  @@index([date])
 }
