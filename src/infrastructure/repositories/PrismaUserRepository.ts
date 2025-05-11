@@ -30,6 +30,13 @@ export class PrismaUserRepository implements UserRepository {
         return user ? this._mapToDomainUser(user) : null;
     }
 
+    async findEmployeeById(id: string): Promise<User | null> {
+        const user = await prisma.user.findUnique({
+            where: { id, role: 'EMPLOYEE' }
+        });
+        return user ? this._mapToDomainUser(user) : null;
+    }
+
     async findByEmail(email: string): Promise<User | null> {
         const user = await prisma.user.findUnique({
             where: { email }

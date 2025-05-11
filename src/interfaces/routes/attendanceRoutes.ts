@@ -1,33 +1,60 @@
-import { Router } from 'express';
+import { ErrorRequestHandler, Router } from 'express';
 import { AttendanceController } from '../controllers/AttendanceController';
 import { authMiddleware, roleMiddleware } from '../middlewares/authMiddleware';
 import { validateRequest } from '../middlewares/errorMiddleware';
-import { createAttendanceSchema, updateAttendanceSchema } from '../validators/attendanceValidator';
+import { checkInSchema, checkOutSchema } from '../validators/attendanceValidator';
 import { AttendanceRepository } from '../../domain/repositories/AttendanceRepository';
 import { UserRepository } from '../../domain/repositories/UserRepository';
 import { UserRole } from '../../domain/entities/User';
+import { LocalFileStorageRepository } from '@/infrastructure/repositories/LocalFilesStorageRepository';
+import { photoUpload, handleMulterError } from '../middlewares/fileUploadMiddleware';
 
 export const createAttendanceRouter = (
     attendanceRepository: AttendanceRepository,
-    userRepository: UserRepository
+    userRepository: UserRepository,
+    localFileStorageRepository: LocalFileStorageRepository
 ) => {
     const router = Router();
     const attendanceController = new AttendanceController(
         attendanceRepository,
-        userRepository
+        userRepository,
+        localFileStorageRepository
     );
 
     // All routes require authentication
     router.use(authMiddleware);
 
-    // Create attendance record
+    // Check-in routes
     router.post(
-        '/',
-        validateRequest(createAttendanceSchema),
-        attendanceController.createAttendanceController()
+        '/check-in',
+        photoUpload,
+        attendanceController.checkInController()
     );
 
-    // Get all attendance records (admin only)
+    router.get(
+        '/validate-check-in',
+        attendanceController.validateCheckInController()
+    );
+
+    // Check-out routes
+    router.post(
+        '/check-out/:id',
+        photoUpload,
+        attendanceController.checkOutController()
+    );
+
+    router.get(
+        '/validate-check-out/:id',
+        attendanceController.validateCheckOutController()
+    );
+
+    // Get user's incomplete attendance record
+    router.get(
+        '/incomplete',
+        attendanceController.getIncompleteAttendanceController()
+    );
+
+    // Admin routes
     router.get(
         '/',
         roleMiddleware([UserRole.ADMIN]),
@@ -46,18 +73,15 @@ export const createAttendanceRouter = (
         attendanceController.getAttendanceByIdController()
     );
 
-    // Update an attendance record
-    router.put(
-        '/:id',
-        validateRequest(updateAttendanceSchema),
-        attendanceController.updateAttendanceController()
-    );
-
-    // Delete an attendance record
+    // Delete an attendance record (admin only)
     router.delete(
         '/:id',
+        roleMiddleware([UserRole.ADMIN]),
         attendanceController.deleteAttendanceController()
     );
+
+    // Error handling for multer (must come after routes that use photoUpload)
+    router.use(handleMulterError as ErrorRequestHandler);
 
     return router;
 };

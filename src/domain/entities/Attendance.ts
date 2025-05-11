@@ -1,18 +1,30 @@
-// Attendance entity types
 export interface Attendance {
     id: string;
     userId: string;
-    photo_url: string;
-    duration?: number | null; // Duration in minutes
+    date: Date;
+    checkInTime: Date;
+    checkOutTime?: Date | null;
+    checkInPhotoUrl: string;
+    checkOutPhotoUrl?: string | null;
     createdAt: Date;
     updatedAt: Date;
 }
 
+// Used for check-in operation
 export interface CreateAttendanceDTO {
     userId: string;
-    photo_url: string;
+    checkInPhotoUrl: string;
+    // Date is handled by the server
 }
 
+// Used for check-out operation
 export interface UpdateAttendanceDTO {
-    photo_url?: string;
+    checkOutPhotoUrl: string;
+    // The checkOutTime is handled by the server
+}
+
+// For attendance validation
+export interface AttendanceValidation {
+    success: boolean;
+    message: string;
 }
