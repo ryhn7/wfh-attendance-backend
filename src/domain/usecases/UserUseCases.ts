@@ -35,6 +35,18 @@ export class GetUserByIdUseCase {
     }
 }
 
+export class GetEmployeeByIdUseCase {
+    constructor(private _userRepository: UserRepository) { }
+
+    async execute(id: string): Promise<User> {
+        const user = await this._userRepository.findEmployeeById(id);
+        if (!user) {
+            throw new Error('Employee not found');
+        }
+        return user;
+    }
+}
+
 export class GetUserByEmailUseCase {
     constructor(private _userRepository: UserRepository) { }
 
