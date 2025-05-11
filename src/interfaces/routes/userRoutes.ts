@@ -12,9 +12,9 @@ export const createUserRouter = (userRepository: UserRepository) => {
 
     // Public routes
     router.post(
-        '/register',
+        '/add',
         validateRequest(createUserSchema),
-        userController.getRegisterController()
+        userController.addUserController()
     );
 
     router.post(
@@ -25,21 +25,22 @@ export const createUserRouter = (userRepository: UserRepository) => {
 
     // Protected routes
     router.get(
-        '/',
+        '/employees',
         authMiddleware,
         roleMiddleware([UserRole.ADMIN]),
         userController.getAllEmployeesController()
     );
 
     router.get(
-        '/:id',
+        '/employee/:id',
         authMiddleware,
-        userController.getUserByIdController()
+        userController.getEmployeeByIdController()
     );
 
     router.put(
         '/:id',
         authMiddleware,
+        roleMiddleware([UserRole.ADMIN]),
         validateRequest(updateUserSchema),
         userController.updateUserController()
     );
