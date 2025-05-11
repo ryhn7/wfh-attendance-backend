@@ -3,8 +3,8 @@ import {
     CreateUserUseCase,
     DeleteUserUseCase,
     GetAllEmployeesUseCase,
+    GetEmployeeByIdUseCase,
     GetUserByEmailUseCase,
-    GetUserByIdUseCase,
     UpdateUserUseCase
 } from '../../domain/usecases/UserUseCases';
 import { UserRepository } from '../../domain/repositories/UserRepository';
@@ -15,7 +15,7 @@ import { ApiResponse } from '../../shared/utils/apiResponse';
 export class UserController {
     constructor(private _userRepository: UserRepository) { }
 
-    getRegisterController() {
+    addUserController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
                 const createUserUseCase = new CreateUserUseCase(this._userRepository);
@@ -87,21 +87,21 @@ export class UserController {
         };
     }
 
-    getUserByIdController() {
+    getEmployeeByIdController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
                 const { id } = req.params;
 
-                const getUserByIdUseCase = new GetUserByIdUseCase(this._userRepository);
-                const user = await getUserByIdUseCase.execute(id);
+                const getEmployeeByIdUseCase = new GetEmployeeByIdUseCase(this._userRepository);
+                const employee = await getEmployeeByIdUseCase.execute(id);
 
                 // Remove password from response
-                const { password, ...userWithoutPassword } = user;
+                const { password, ...employeeWithoutPassword } = employee;
 
-                ApiResponse.success(res, userWithoutPassword);
+                ApiResponse.success(res, employeeWithoutPassword);
             } catch (error) {
                 if (error instanceof Error) {
-                    if (error.message === 'User not found') {
+                    if (error.message === 'Employee not found') {
                         ApiResponse.notFound(res, error.message);
                     } else {
                         ApiResponse.error(res, error.message);
@@ -118,8 +118,8 @@ export class UserController {
             try {
                 const { id } = req.params;
 
-                // Check if the authenticated user is updating their own profile or is an admin
-                if (req.user?.id !== id && req.user?.role !== 'ADMIN') {
+                // Only admin can update users
+                if (req.user?.role !== 'ADMIN') {
                     ApiResponse.forbidden(res, 'Unauthorized to update this user');
                     return;
                 }
