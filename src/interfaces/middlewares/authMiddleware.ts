@@ -31,6 +31,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
         // Verify token
         const decoded = jwt.verify(token, jwtSecret) as {
             id: string;
+            name: string;
             email: string;
             role: UserRole;
         };
