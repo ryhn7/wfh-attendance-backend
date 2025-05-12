@@ -10,6 +10,10 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
         return {
             id: prismaAttendance.id,
             userId: prismaAttendance.userId,
+            user: prismaAttendance.user ? {
+                name: prismaAttendance.user.name,
+                email: prismaAttendance.user.email,
+            } : undefined,
             date: prismaAttendance.date,
             checkInTime: prismaAttendance.checkInTime,
             checkOutTime: prismaAttendance.checkOutTime,

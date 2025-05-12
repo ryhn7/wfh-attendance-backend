@@ -124,38 +124,7 @@ export class AttendanceController {
         };
     }
 
-    getAttendanceByUserIdController() {
-        return async (req: Request, res: Response): Promise<void> => {
-            try {
-                const { userId } = req.params;
-
-                // Check if user has permission to view these attendance records
-                if (userId !== req.user?.id &&
-                    req.user?.role !== 'ADMIN') {
-                    ApiResponse.forbidden(res, 'You are not authorized to view attendance records for this user');
-                    return;
-                }
-
-                const getAttendanceByUserIdUseCase = new GetAttendanceByUserIdUseCase(
-                    this._attendanceRepository,
-                    this._userRepository
-                );
-                const attendances = await getAttendanceByUserIdUseCase.execute(userId);
-
-                ApiResponse.success(res, attendances);
-            } catch (error) {
-                if (error instanceof Error) {
-                    if (error.message === 'User not found') {
-                        ApiResponse.notFound(res, error.message);
-                    } else {
-                        ApiResponse.error(res, error.message);
-                    }
-                } else {
-                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
-                }
-            }
-        };
-    }    // Check-out controller
+    // Check-out controller
     checkOutController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
@@ -266,6 +235,58 @@ export class AttendanceController {
                 }
 
                 ApiResponse.success(res, attendance);
+            } catch (error) {
+                if (error instanceof Error) {
+                    ApiResponse.error(res, error.message);
+                } else {
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
+                }
+            }
+        };
+    }
+
+    // For personal attendance (self-view)
+    getAttendanceHistoryController() {
+        return async (req: Request, res: Response): Promise<void> => {
+            try {
+                const userId = req.user!.id;
+
+                const getAttendanceByUserIdUseCase = new GetAttendanceByUserIdUseCase(
+                    this._attendanceRepository,
+                    this._userRepository
+                );
+                const attendances = await getAttendanceByUserIdUseCase.execute(userId);
+
+                ApiResponse.success(res, attendances);
+            } catch (error) {
+                if (error instanceof Error) {
+                    ApiResponse.error(res, error.message);
+                } else {
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
+                }
+            }
+        };
+    }
+
+    // For admin view of any employee
+    getEmployeeAttendanceController() {
+        return async (req: Request, res: Response): Promise<void> => {
+            try {
+                const { userId } = req.params;
+
+                // Only admins can view other users' attendance
+                if (req.user?.role !== 'ADMIN') {
+                    ApiResponse.forbidden(res, 'Unauthorized to view employee attendance records');
+                    return;
+                }
+
+                const getAttendanceByUserIdUseCase = new GetAttendanceByUserIdUseCase(
+                    this._attendanceRepository,
+                    this._userRepository
+                );
+                const attendances = await getAttendanceByUserIdUseCase.execute(userId);
+
+                ApiResponse.success(res, attendances);
             } catch (error) {
                 if (error instanceof Error) {
                     ApiResponse.error(res, error.message);

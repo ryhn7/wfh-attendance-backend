@@ -61,10 +61,17 @@ export const createAttendanceRouter = (
         attendanceController.getAllAttendancesController()
     );
 
+    // Get attendance history for a specific user
+    router.get(
+        '/history',
+        attendanceController.getAttendanceHistoryController()
+    );
+
     // Get attendance records for a specific user
     router.get(
         '/user/:userId',
-        attendanceController.getAttendanceByUserIdController()
+        roleMiddleware([UserRole.ADMIN]),
+        attendanceController.getEmployeeAttendanceController()
     );
 
     // Get a specific attendance record by ID

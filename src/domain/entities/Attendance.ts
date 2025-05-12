@@ -1,6 +1,9 @@
+import { UserInfo } from "./User";
+
 export interface Attendance {
     id: string;
     userId: string;
+    user?: UserInfo;
     date: Date;
     checkInTime: Date;
     checkOutTime?: Date | null;

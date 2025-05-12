@@ -9,6 +9,12 @@ export interface User {
     updatedAt: Date;
 }
 
+export interface UserInfo {
+    email: string;
+    name: string;
+
+}
+
 export enum UserRole {
     ADMIN = 'ADMIN',
     EMPLOYEE = 'EMPLOYEE',
