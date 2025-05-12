@@ -5,7 +5,6 @@ export interface AttendanceRepository {
     findById(id: string): Promise<Attendance | null>;
     findByUserId(userId: string): Promise<Attendance[]>;
     update(id: string, data: UpdateAttendanceDTO): Promise<Attendance>;
-    delete(id: string): Promise<void>;
     findAll(): Promise<Attendance[]>;
     findTodayAttendanceByUserId(userId: string): Promise<Attendance | null>;
     findIncompleteAttendanceByUserId(userId: string): Promise<Attendance | null>;

@@ -186,19 +186,6 @@ export class UpdateAttendanceUseCase {
     }
 }
 
-export class DeleteAttendanceUseCase {
-    constructor(private _attendanceRepository: AttendanceRepository) { }
-
-    async execute(id: string): Promise<void> {
-        const existingAttendance = await this._attendanceRepository.findById(id);
-        if (!existingAttendance) {
-            throw new Error('Attendance record not found');
-        }
-
-        await this._attendanceRepository.delete(id);
-    }
-}
-
 export class GetAllAttendancesUseCase {
     constructor(private _attendanceRepository: AttendanceRepository) { }
 

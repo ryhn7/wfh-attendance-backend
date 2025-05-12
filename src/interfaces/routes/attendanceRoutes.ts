@@ -73,13 +73,6 @@ export const createAttendanceRouter = (
         attendanceController.getAttendanceByIdController()
     );
 
-    // Delete an attendance record (admin only)
-    router.delete(
-        '/:id',
-        roleMiddleware([UserRole.ADMIN]),
-        attendanceController.deleteAttendanceController()
-    );
-
     // Error handling for multer (must come after routes that use photoUpload)
     router.use(handleMulterError as ErrorRequestHandler);
 

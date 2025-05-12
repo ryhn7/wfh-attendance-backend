@@ -4,7 +4,6 @@ import { UserRepository } from '../../domain/repositories/UserRepository';
 import { FileStorageRepository } from '../../domain/repositories/FileStorageRepository';
 import {
     CreateAttendanceUseCase,
-    DeleteAttendanceUseCase,
     GetAllAttendancesUseCase,
     GetAttendanceByUserIdUseCase,
     GetAttendanceByIdUseCase,
@@ -228,40 +227,6 @@ export class AttendanceController {
             }
         };
     }
-
-    deleteAttendanceController() {
-        return async (req: Request, res: Response): Promise<void> => {
-            try {
-                const { id } = req.params;
-
-                // Get the attendance to check ownership
-                const getAttendanceByIdUseCase = new GetAttendanceByIdUseCase(this._attendanceRepository);
-                const attendance = await getAttendanceByIdUseCase.execute(id);
-
-                // Check if user has permission to delete this attendance record
-                if (attendance.userId !== req.user?.id &&
-                    req.user?.role !== 'ADMIN') {
-                    ApiResponse.forbidden(res, 'You are not authorized to delete this attendance record');
-                    return;
-                }
-
-                const deleteAttendanceUseCase = new DeleteAttendanceUseCase(this._attendanceRepository);
-                await deleteAttendanceUseCase.execute(id);
-
-                ApiResponse.success(res, null, 'Attendance record deleted successfully');
-            } catch (error) {
-                if (error instanceof Error) {
-                    if (error.message === 'Attendance record not found') {
-                        ApiResponse.notFound(res, error.message);
-                    } else {
-                        ApiResponse.error(res, error.message);
-                    }
-                } else {
-                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
-                }
-            }
-        };
-    } 
 
     getAllAttendancesController() {
         return async (req: Request, res: Response): Promise<void> => {
