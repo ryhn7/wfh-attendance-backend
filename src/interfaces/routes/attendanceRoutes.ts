@@ -74,16 +74,16 @@ export const createAttendanceRouter = (
         attendanceController.getEmployeeAttendanceController()
     );
 
-    // Get a specific attendance record by ID
-    router.get(
-        '/:id',
-        attendanceController.getAttendanceByIdController()
-    );
-
     // Add the new route for getting today's attendance
     router.get(
         '/today',
         attendanceController.getTodayAttendanceController()
+    );
+
+    // Get a specific attendance record by ID
+    router.get(
+        '/:id',
+        attendanceController.getAttendanceByIdController()
     );
 
     // Error handling for multer (must come after routes that use photoUpload)

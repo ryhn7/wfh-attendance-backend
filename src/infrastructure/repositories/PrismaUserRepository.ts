@@ -30,13 +30,6 @@ export class PrismaUserRepository implements UserRepository {
         return user ? this._mapToDomainUser(user) : null;
     }
 
-    async findEmployeeById(id: string): Promise<User | null> {
-        const user = await prisma.user.findUnique({
-            where: { id, role: 'EMPLOYEE' }
-        });
-        return user ? this._mapToDomainUser(user) : null;
-    }
-
     async findByEmail(email: string): Promise<User | null> {
         const user = await prisma.user.findUnique({
             where: { email }
@@ -58,10 +51,8 @@ export class PrismaUserRepository implements UserRepository {
         });
     }
 
-    async findEmployees(): Promise<User[]> {
-        const users = await prisma.user.findMany({
-            where: { role: 'EMPLOYEE' }
-        });
+    async findAll(): Promise<User[]> {
+        const users = await prisma.user.findMany();
         return users.map(user => this._mapToDomainUser(user));
     }
 }

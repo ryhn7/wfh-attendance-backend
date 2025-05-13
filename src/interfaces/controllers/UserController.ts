@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import {
     CreateUserUseCase,
     DeleteUserUseCase,
-    GetAllEmployeesUseCase,
-    GetEmployeeByIdUseCase,
+    GetAllUsersUseCase,
+    GetUserByIdUseCase,
     GetUserByEmailUseCase,
     UpdateUserUseCase
 } from '../../domain/usecases/UserUseCases';
@@ -88,18 +88,18 @@ export class UserController {
         };
     }
 
-    getEmployeeByIdController() {
+    getUserByIdController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
                 const { id } = req.params;
 
-                const getEmployeeByIdUseCase = new GetEmployeeByIdUseCase(this._userRepository);
-                const employee = await getEmployeeByIdUseCase.execute(id);
+                const getUserByIdUseCase = new GetUserByIdUseCase(this._userRepository);
+                const user = await getUserByIdUseCase.execute(id);
 
                 // Remove password from response
-                const { password, ...employeeWithoutPassword } = employee;
+                const { password, ...userWithoutPassword } = user;
 
-                ApiResponse.success(res, employeeWithoutPassword);
+                ApiResponse.success(res, userWithoutPassword);
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === 'Employee not found') {
@@ -175,7 +175,7 @@ export class UserController {
         };
     }
 
-    getAllEmployeesController() {
+    getAllUsersController() {
         return async (req: Request, res: Response): Promise<void> => {
             try {
                 // Only admin can list all users
@@ -184,8 +184,8 @@ export class UserController {
                     return;
                 }
 
-                const getAllEmployeesUseCase = new GetAllEmployeesUseCase(this._userRepository);
-                const users = await getAllEmployeesUseCase.execute();
+                const getAllUsersUseCase = new GetAllUsersUseCase(this._userRepository);
+                const users = await getAllUsersUseCase.execute();
 
                 // Remove passwords from response
                 const usersWithoutPasswords = users.map(user => {

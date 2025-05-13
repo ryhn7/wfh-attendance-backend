@@ -25,16 +25,16 @@ export const createUserRouter = (userRepository: UserRepository) => {
 
     // Protected routes
     router.get(
-        '/employees',
+        '/',
         authMiddleware,
         roleMiddleware([UserRole.ADMIN]),
-        userController.getAllEmployeesController()
+        userController.getAllUsersController()
     );
 
     router.get(
-        '/employee/:id',
+        '/:id',
         authMiddleware,
-        userController.getEmployeeByIdController()
+        userController.getUserByIdController()
     );
 
     router.put(
