@@ -1,0 +1,1684 @@
+{
+	"info": {
+		"_postman_id": "2ca7017a-6d3f-450d-a5ba-eb9adccacf23",
+		"name": "Dexa wfh-attendance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37536710"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"adam@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						},
+						"description": "### POST /api/users/login\n\nThis endpoint is used to log in a user.\n\n#### Request\n\n- Method: POST\n    \n- URL: `http://localhost:3000/api/users/login`\n    \n- Body:\n    \n    - email (text, required): The email of the user.\n        \n    - password (text, required): The password of the user.\n        \n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"success\": {\n      \"type\": \"boolean\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"token\": {\n          \"type\": \"string\"\n        },\n        \"user\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"email\": {\n              \"type\": \"string\"\n            },\n            \"name\": {\n              \"type\": \"string\"\n            },\n            \"role\": {\n              \"type\": \"string\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\n ```\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- { \"success\": true, \"message\": \"\", \"data\": { \"token\": \"\", \"user\": { \"id\": \"\", \"email\": \"\", \"name\": \"\", \"role\": \"\" } }}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "get all users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYjJmNWYxLWYzNDctNGUwMS05YWYzLWNmZWNlYzg5YmZjYSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDY5NjE3MTEsImV4cCI6MTc0NzA0ODExMX0.vcHeoAt6dxMgeqhQlFDmwgZK9K8ZshkqqR-eGTfMG_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						},
+						"description": "### GET /api/users/\n\nThis endpoint retrieves a list of users.\n\n#### Request\n\n- Method: GET\n    \n- URL: `http://localhost:3000/api/users/`\n    \n\n#### Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"success\": {\n      \"type\": \"boolean\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"string\"\n          },\n          \"email\": {\n            \"type\": \"string\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          },\n          \"role\": {\n            \"type\": \"string\"\n          },\n          \"createdAt\": {\n            \"type\": \"string\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "get all users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "444"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1bc-0vaEL+KjIhrg4HAdl93nesaiec4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 11:25:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Operation successful\",\n    \"data\": [\n        {\n            \"id\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n            \"email\": \"jimmy@gmail.com\",\n            \"name\": \"Jimmy Mcgill\",\n            \"role\": \"EMPLOYEE\",\n            \"createdAt\": \"2025-05-11T11:11:49.369Z\",\n            \"updatedAt\": \"2025-05-11T11:22:47.418Z\"\n        },\n        {\n            \"id\": \"f8c4508c-120c-42ab-86ea-f2110b1e6834\",\n            \"email\": \"employee@example.com\",\n            \"name\": \"Employee User\",\n            \"role\": \"EMPLOYEE\",\n            \"createdAt\": \"2025-05-10T14:03:53.764Z\",\n            \"updatedAt\": \"2025-05-10T14:03:53.764Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get users by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYjJmNWYxLWYzNDctNGUwMS05YWYzLWNmZWNlYzg5YmZjYSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDY5NjE3MTEsImV4cCI6MTc0NzA0ODExMX0.vcHeoAt6dxMgeqhQlFDmwgZK9K8ZshkqqR-eGTfMG_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/178d4870-a5de-4d7d-bc59-7d562a3e198c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"178d4870-a5de-4d7d-bc59-7d562a3e198c"
+							]
+						},
+						"description": "### GET /api/users/{userId}\n\nThis endpoint retrieves user information based on the provided user ID.\n\n#### Request\n\nNo request body parameters are required for this request.\n\n- Path Parameters\n    \n    - userId (string, required): The unique identifier of the user.\n        \n\n#### Response\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"success\": {\n            \"type\": \"boolean\"\n        },\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"data\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"id\": {\n                    \"type\": \"string\"\n                },\n                \"email\": {\n                    \"type\": \"string\"\n                },\n                \"name\": {\n                    \"type\": \"string\"\n                },\n                \"role\": {\n                    \"type\": \"string\"\n                },\n                \"createdAt\": {\n                    \"type\": \"string\"\n                },\n                \"updatedAt\": {\n                    \"type\": \"string\"\n                }\n            }\n        }\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "get users by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/178d4870-a5de-4d7d-bc59-7d562a3e198c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"178d4870-a5de-4d7d-bc59-7d562a3e198c"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6-tjf+5hhFyXQXG0gT3maAXGDguZ0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 12:29:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Operation successful\",\n    \"data\": {\n        \"id\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n        \"email\": \"jimmy@gmail.com\",\n        \"name\": \"Jimmy Mcgill\",\n        \"role\": \"EMPLOYEE\",\n        \"createdAt\": \"2025-05-11T11:11:49.369Z\",\n        \"updatedAt\": \"2025-05-11T11:22:47.418Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "add employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMTcwMTQ4LWE0OTgtNDhmZi04NmRjLTk3OTYwNzY1MTc3NSIsImVtYWlsIjoiYWRhbUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDcwMTg1MTEsImV4cCI6MTc0NzEwNDkxMX0.fuQV3HYXr78qxh1imYrylNDlwPZ6n-GUlZSUIuGotmU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"wenwu@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"name\": \"Xu Wenwu\",\r\n    \"role\": \"EMPLOYEE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"add"
+							]
+						},
+						"description": "### POST /api/users/add\n\nThis endpoint allows the client to add a new user to the system.\n\n#### Request Body\n\n- `email` (string, required): The email of the user.\n    \n- `password` (string, required): The password of the user.\n    \n- `name` (string, required): The name of the user.\n    \n- `role` (string, required): The role of the user.\n    \n\n#### Response\n\nThe response is in the form of a JSON schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"success\": {\n      \"type\": \"boolean\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\"\n        },\n        \"email\": {\n          \"type\": \"string\"\n        },\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"role\": {\n          \"type\": \"string\"\n        },\n        \"createdAt\": {\n          \"type\": \"string\"\n        },\n        \"updatedAt\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "add employee",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"adam@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"name\": \"Adam Smith\",\r\n    \"role\": \"EMPLOYEE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"add"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "251"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fb-beM4JrLuwVV+NE6C2BiivnN2BZc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 11:10:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"id\": \"c1170148-a498-48ff-86dc-979607651775\",\n        \"email\": \"adam@gmail.com\",\n        \"name\": \"Adam Smith\",\n        \"role\": \"EMPLOYEE\",\n        \"createdAt\": \"2025-05-11T11:10:17.009Z\",\n        \"updatedAt\": \"2025-05-11T11:10:17.009Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "add admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYjJmNWYxLWYzNDctNGUwMS05YWYzLWNmZWNlYzg5YmZjYSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDY5NjE3MTEsImV4cCI6MTc0NzA0ODExMX0.vcHeoAt6dxMgeqhQlFDmwgZK9K8ZshkqqR-eGTfMG_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"josh@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"name\": \"Joshua\",\r\n    \"role\": \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "add admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"josh@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"name\": \"Joshua\",\r\n    \"role\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/add",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"add"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "244"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f4-fsBSqFC3vOn35GSXShpg7UmkAYI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 11:27:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"id\": \"404d5d08-27c7-4d4b-aa76-96da70348533\",\n        \"email\": \"josh@gmail.com\",\n        \"name\": \"Joshua\",\n        \"role\": \"ADMIN\",\n        \"createdAt\": \"2025-05-11T11:27:26.977Z\",\n        \"updatedAt\": \"2025-05-11T11:27:26.977Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYjJmNWYxLWYzNDctNGUwMS05YWYzLWNmZWNlYzg5YmZjYSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDY5NjE3MTEsImV4cCI6MTc0NzA0ODExMX0.vcHeoAt6dxMgeqhQlFDmwgZK9K8ZshkqqR-eGTfMG_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"adam@gmail.com\",\r\n    \"name\": \"Adam Smith\",\r\n    \"role\": \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/c1170148-a498-48ff-86dc-979607651775",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"c1170148-a498-48ff-86dc-979607651775"
+							]
+						},
+						"description": "### Update User Details\n\nThis endpoint allows the client to update the details of a specific user.\n\n#### Request Body\n\n- `email` (string): The email address of the user.\n    \n- `name` (string): The name of the user.\n    \n- `role` (string): The role of the user.\n    \n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n    \n- `message` (string): A message related to the request.\n    \n- `data` (object): An object containing the updated user details.\n    \n    - `id` (string): The unique identifier of the user.\n        \n    - `email` (string): The email address of the user.\n        \n    - `name` (string): The name of the user.\n        \n    - `role` (string): The role of the user.\n        \n    - `createdAt` (string): The timestamp of when the user was created.\n        \n    - `updatedAt` (string): The timestamp of when the user was last updated."
+					},
+					"response": [
+						{
+							"name": "update user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"adam@gmail.com\",\r\n    \"name\": \"Adam Smith\",\r\n    \"role\": \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/users/c1170148-a498-48ff-86dc-979607651775",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"c1170148-a498-48ff-86dc-979607651775"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "245"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f5-hq614e1cOFdnoxsWmeLtt8qBgd4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 11:24:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User updated successfully\",\n    \"data\": {\n        \"id\": \"c1170148-a498-48ff-86dc-979607651775\",\n        \"email\": \"adam@gmail.com\",\n        \"name\": \"Adam Smith\",\n        \"role\": \"ADMIN\",\n        \"createdAt\": \"2025-05-11T11:10:17.009Z\",\n        \"updatedAt\": \"2025-05-11T11:24:27.038Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYzYjJmNWYxLWYzNDctNGUwMS05YWYzLWNmZWNlYzg5YmZjYSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NDY5NjE3MTEsImV4cCI6MTc0NzA0ODExMX0.vcHeoAt6dxMgeqhQlFDmwgZK9K8ZshkqqR-eGTfMG_M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/f8c4508c-120c-42ab-86ea-f2110b1e6834",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"f8c4508c-120c-42ab-86ea-f2110b1e6834"
+							]
+						},
+						"description": "### Delete User\n\nThis endpoint is used to delete a specific user.\n\n#### Request\n\n- Method: DELETE\n    \n- URL: `http://localhost:3000/api/users/f8c4508c-120c-42ab-86ea-f2110b1e6834`\n    \n\n#### Response\n\nThe response for this request follows the JSON schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"success\": {\n      \"type\": \"boolean\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"null\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "delete user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/users/f8c4508c-120c-42ab-86ea-f2110b1e6834",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"users",
+										"f8c4508c-120c-42ab-86ea-f2110b1e6834"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"42-Orl5v+hQ8Gj+F6mZBO1mO9s+1jg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 11:28:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User deleted successfully\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "get all attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMTcwMTQ4LWE0OTgtNDhmZi04NmRjLTk3OTYwNzY1MTc3NSIsIm5hbWUiOiJBZGFtIFNtaXRoIiwiZW1haWwiOiJhZGFtQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NzE1NDUwNywiZXhwIjoxNzQ3MjQwOTA3fQ.MBytctYfMU52jXH22tAjv7bddiBA2hbqq1xtJrFHvsc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								""
+							]
+						},
+						"description": "### Get Attendance Data\n\nThis endpoint retrieves the attendance data for all users.\n\n**Request Body**  \nThis request does not require a request body.\n\n**Response**\n\n- `success` (boolean): Indicates if the request was successful.\n    \n- `message` (string): A message related to the request.\n    \n- `data` (array): An array of objects containing the following attendance information:\n    \n    - `id` (string): The ID of the attendance record.\n        \n    - `userId` (string): The ID of the user associated with the attendance record.\n        \n    - `user` (object): An object containing user information including name, email, and role.\n        \n    - `date` (string): The date of the attendance record.\n        \n    - `checkInTime` (string): The time when the user checked in.\n        \n    - `checkOutTime` (string): The time when the user checked out, if available.\n        \n    - `checkInPhotoUrl` (string): The URL of the photo taken during check-in.\n        \n    - `checkOutPhotoUrl` (string): The URL of the photo taken during check-out, if available.\n        \n    - `createdAt` (string): The timestamp of when the record was created.\n        \n    - `updatedAt` (string): The timestamp of when the record was last updated.\n        \n\n**Example Response**\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": [\n        {\n            \"id\": \"\",\n            \"userId\": \"\",\n            \"date\": \"\",\n            \"checkInTime\": \"\",\n            \"checkOutTime\": null,\n            \"checkInPhotoUrl\": \"\",\n            \"checkOutPhotoUrl\": null,\n            \"createdAt\": \"\",\n            \"updatedAt\": \"\"\n        }\n    ]\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "get all attendance",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/attendance/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"attendance",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1334"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"536-lYldaZKYEUn0qJpzjdC/9r1dm2o\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 04:32:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Operation successful\",\n    \"data\": [\n        {\n            \"id\": \"e4dccfe5-1fe2-4bf5-a0cf-58780215d916\",\n            \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n            \"date\": \"2025-05-11T00:00:00.000Z\",\n            \"checkInTime\": \"2025-05-12T03:41:03.434Z\",\n            \"checkOutTime\": null,\n            \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/f3deab04-1e66-4acc-99dd-a9dab448d049.jpg\",\n            \"checkOutPhotoUrl\": null,\n            \"createdAt\": \"2025-05-12T03:41:03.436Z\",\n            \"updatedAt\": \"2025-05-12T03:41:03.436Z\"\n        },\n        {\n            \"id\": \"bb117542-ad23-4dac-afa1-4829d36e3627\",\n            \"userId\": \"e3038695-08aa-43ec-be06-58b5c3463868\",\n            \"date\": \"2025-05-11T00:00:00.000Z\",\n            \"checkInTime\": \"2025-05-12T03:30:51.530Z\",\n            \"checkOutTime\": null,\n            \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/ffdd948b-e1de-47fc-b02d-8569dd26a76c.jpg\",\n            \"checkOutPhotoUrl\": null,\n            \"createdAt\": \"2025-05-12T03:30:51.531Z\",\n            \"updatedAt\": \"2025-05-12T03:30:51.531Z\"\n        },\n        {\n            \"id\": \"d16690ca-622b-4df0-b336-2cea5605aa79\",\n            \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n            \"date\": \"2025-05-10T00:00:00.000Z\",\n            \"checkInTime\": \"2025-05-11T15:37:35.718Z\",\n            \"checkOutTime\": \"2025-05-11T15:46:34.026Z\",\n            \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/148d1931-dce9-4b5d-b88d-d6ced9965587.jpg\",\n            \"checkOutPhotoUrl\": \"http://localhost:3000/public/attendance/487fe46f-152b-4b4e-ae4d-d184fe21d513.jpg\",\n            \"createdAt\": \"2025-05-11T15:37:35.720Z\",\n            \"updatedAt\": \"2025-05-11T15:46:34.029Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "attendance check in",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OGQ0ODcwLWE1ZGUtNGQ3ZC1iYzU5LTdkNTYyYTNlMTk4YyIsIm5hbWUiOiJKaW1teSBNY2dpbGwiLCJlbWFpbCI6ImppbW15QGdtYWlsLmNvbSIsInJvbGUiOiJFTVBMT1lFRSIsImlhdCI6MTc0NzEwNDY5NiwiZXhwIjoxNzQ3MTkxMDk2fQ.x8G3J3BUGpf5XEYZd_v8Ttws7lFgZVcEcFqa8wBB3YA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/D:/D Download/wenwu.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/check-in",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								"check-in"
+							]
+						},
+						"description": "# Attendance Check-In\n\nThis endpoint is used to check in for attendance.\n\n### Request Body\n\n- `photo` (file): A photo of the attendance check-in.\n    \n\n### Response\n\n- Status: 400\n    \n- Content-Type: application/json\n    \n\n#### Success Response\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": {\n        \"id\": \"\",\n        \"userId\": \"\",\n        \"date\": \"\",\n        \"checkInTime\": \"\",\n        \"checkOutTime\": null,\n        \"checkInPhotoUrl\": \"\",\n        \"checkOutPhotoUrl\": null,\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\"\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "attendance check in",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "/D:/D Download/spencer.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/attendance/check-in",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"attendance",
+										"check-in"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "447"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1bf-M4Z8MeK7DOwCJ5pYFcc07Njiqo4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 15:37:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Check-in successful\",\n    \"data\": {\n        \"id\": \"d16690ca-622b-4df0-b336-2cea5605aa79\",\n        \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n        \"date\": \"2025-05-10T00:00:00.000Z\",\n        \"checkInTime\": \"2025-05-11T15:37:35.718Z\",\n        \"checkOutTime\": null,\n        \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/148d1931-dce9-4b5d-b88d-d6ced9965587.jpg\",\n        \"checkOutPhotoUrl\": null,\n        \"createdAt\": \"2025-05-11T15:37:35.720Z\",\n        \"updatedAt\": \"2025-05-11T15:37:35.720Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "attendance check out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OGQ0ODcwLWE1ZGUtNGQ3ZC1iYzU5LTdkNTYyYTNlMTk4YyIsIm5hbWUiOiJKaW1teSBNY2dpbGwiLCJlbWFpbCI6ImppbW15QGdtYWlsLmNvbSIsInJvbGUiOiJFTVBMT1lFRSIsImlhdCI6MTc0NzEwNDY5NiwiZXhwIjoxNzQ3MTkxMDk2fQ.x8G3J3BUGpf5XEYZd_v8Ttws7lFgZVcEcFqa8wBB3YA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/D:/D Download/brandon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/check-out/43e556ef-7786-455f-a365-37ce7c463ade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								"check-out",
+								"43e556ef-7786-455f-a365-37ce7c463ade"
+							]
+						},
+						"description": "### Attendance Check-Out\n\nThis endpoint allows the user to check out from their attendance by providing a photo.\n\n#### Request Body\n\n- `photo` (file): A photo of the user for attendance check-out.\n    \n\n#### Response\n\n- Status: 400\n    \n- Content-Type: application/json\n    \n\nExample Response:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": {\n        \"id\": \"\",\n        \"userId\": \"\",\n        \"date\": \"\",\n        \"checkInTime\": \"\",\n        \"checkOutTime\": \"\",\n        \"checkInPhotoUrl\": \"\",\n        \"checkOutPhotoUrl\": \"\",\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\"\n    }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "attendance check out",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "/D:/D Download/pattinson.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/attendance/check-out/d16690ca-622b-4df0-b336-2cea5605aa79",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"attendance",
+										"check-out",
+										"d16690ca-622b-4df0-b336-2cea5605aa79"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "548"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"224-nwRkjFI5HHwcaE+xzsD6+LOQftM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 11 May 2025 15:46:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Check-out successful\",\n    \"data\": {\n        \"id\": \"d16690ca-622b-4df0-b336-2cea5605aa79\",\n        \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n        \"date\": \"2025-05-10T00:00:00.000Z\",\n        \"checkInTime\": \"2025-05-11T15:37:35.718Z\",\n        \"checkOutTime\": \"2025-05-11T15:46:34.026Z\",\n        \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/148d1931-dce9-4b5d-b88d-d6ced9965587.jpg\",\n        \"checkOutPhotoUrl\": \"http://localhost:3000/public/attendance/487fe46f-152b-4b4e-ae4d-d184fe21d513.jpg\",\n        \"createdAt\": \"2025-05-11T15:37:35.720Z\",\n        \"updatedAt\": \"2025-05-11T15:46:34.029Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get attendance history",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OGQ0ODcwLWE1ZGUtNGQ3ZC1iYzU5LTdkNTYyYTNlMTk4YyIsImVtYWlsIjoiamltbXlAZ21haWwuY29tIiwicm9sZSI6IkVNUExPWUVFIiwiaWF0IjoxNzQ3MDIxMjQxLCJleHAiOjE3NDcxMDc2NDF9.KH53_DJOoYkMmCCXSNNqLyEvZ53_cWxcGQkygaODbI8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								"history"
+							]
+						},
+						"description": "### Get Attendance History\n\nThis endpoint retrieves the attendance history for all users.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response\n\n- `success` (boolean): Indicates if the request was successful.\n    \n- `message` (string): An optional message from the server.\n    \n- `data` (array): An array of attendance history objects, each containing the following fields:\n    \n    - `id` (string): The unique identifier for the attendance record.\n        \n    - `userId` (string): The ID of the user associated with the attendance record.\n        \n    - `date` (string): The date of the attendance record.\n        \n    - `checkInTime` (string): The time when the user checked in.\n        \n    - `checkOutTime` (string): The time when the user checked out, or null if the user has not checked out yet.\n        \n    - `checkInPhotoUrl` (string): The URL of the photo taken during check-in.\n        \n    - `checkOutPhotoUrl` (string): The URL of the photo taken during check-out, or null if the user has not checked out yet.\n        \n    - `createdAt` (string): The timestamp when the attendance record was created.\n        \n    - `updatedAt` (string): The timestamp when the attendance record was last updated.\n        \n\n#### Example\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": [\n        {\n            \"id\": \"\",\n            \"userId\": \"\",\n            \"date\": \"\",\n            \"checkInTime\": \"\",\n            \"checkOutTime\": null,\n            \"checkInPhotoUrl\": \"\",\n            \"checkOutPhotoUrl\": null,\n            \"createdAt\": \"\",\n            \"updatedAt\": \"\"\n        }\n    ]\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "get attendance history",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/attendance/history",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"attendance",
+										"history"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "942"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3ae-97VsEzkpmFhM9LIb/j0NgVyjjQQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 12 May 2025 04:28:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Operation successful\",\n    \"data\": [\n        {\n            \"id\": \"e4dccfe5-1fe2-4bf5-a0cf-58780215d916\",\n            \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n            \"date\": \"2025-05-11T00:00:00.000Z\",\n            \"checkInTime\": \"2025-05-12T03:41:03.434Z\",\n            \"checkOutTime\": null,\n            \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/f3deab04-1e66-4acc-99dd-a9dab448d049.jpg\",\n            \"checkOutPhotoUrl\": null,\n            \"createdAt\": \"2025-05-12T03:41:03.436Z\",\n            \"updatedAt\": \"2025-05-12T03:41:03.436Z\"\n        },\n        {\n            \"id\": \"d16690ca-622b-4df0-b336-2cea5605aa79\",\n            \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n            \"date\": \"2025-05-10T00:00:00.000Z\",\n            \"checkInTime\": \"2025-05-11T15:37:35.718Z\",\n            \"checkOutTime\": \"2025-05-11T15:46:34.026Z\",\n            \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/148d1931-dce9-4b5d-b88d-d6ced9965587.jpg\",\n            \"checkOutPhotoUrl\": \"http://localhost:3000/public/attendance/487fe46f-152b-4b4e-ae4d-d184fe21d513.jpg\",\n            \"createdAt\": \"2025-05-11T15:37:35.720Z\",\n            \"updatedAt\": \"2025-05-11T15:46:34.029Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "get attendance by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OGQ0ODcwLWE1ZGUtNGQ3ZC1iYzU5LTdkNTYyYTNlMTk4YyIsIm5hbWUiOiJKaW1teSBNY2dpbGwiLCJlbWFpbCI6ImppbW15QGdtYWlsLmNvbSIsInJvbGUiOiJFTVBMT1lFRSIsImlhdCI6MTc0NzEwNDY5NiwiZXhwIjoxNzQ3MTkxMDk2fQ.x8G3J3BUGpf5XEYZd_v8Ttws7lFgZVcEcFqa8wBB3YA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/43e556ef-7786-455f-a365-37ce7c463ade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								"43e556ef-7786-455f-a365-37ce7c463ade"
+							]
+						},
+						"description": "The API endpoint retrieves attendance details for a specific user identified by the provided ID.\n\nThe response schema for the successful execution of the request is as follows:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"success\": {\n            \"type\": \"boolean\"\n        },\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"data\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"id\": {\n                    \"type\": \"string\"\n                },\n                \"userId\": {\n                    \"type\": \"string\"\n                },\n                \"user\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"name\": {\n                            \"type\": \"string\"\n                        },\n                        \"email\": {\n                            \"type\": \"string\"\n                        }\n                    }\n                },\n                \"date\": {\n                    \"type\": \"string\"\n                },\n                \"checkInTime\": {\n                    \"type\": \"string\"\n                },\n                \"checkOutTime\": {\n                    \"type\": [\"string\", \"null\"]\n                },\n                \"checkInPhotoUrl\": {\n                    \"type\": \"string\"\n                },\n                \"checkOutPhotoUrl\": {\n                    \"type\": [\"string\", \"null\"]\n                },\n                \"createdAt\": {\n                    \"type\": \"string\"\n                },\n                \"updatedAt\": {\n                    \"type\": \"string\"\n                }\n            }\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "get today attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OGQ0ODcwLWE1ZGUtNGQ3ZC1iYzU5LTdkNTYyYTNlMTk4YyIsIm5hbWUiOiJKaW1teSBNY2dpbGwiLCJlbWFpbCI6ImppbW15QGdtYWlsLmNvbSIsInJvbGUiOiJFTVBMT1lFRSIsImlhdCI6MTc0NzEwNDY5NiwiZXhwIjoxNzQ3MTkxMDk2fQ.x8G3J3BUGpf5XEYZd_v8Ttws7lFgZVcEcFqa8wBB3YA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/attendance/today",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"attendance",
+								"today"
+							]
+						},
+						"description": "### GET /api/attendance/today\n\nThis endpoint retrieves the attendance record for today.\n\n#### Request\n\nThis is a GET request to the endpoint `http://localhost:3000/api/attendance/today`.\n\n#### Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"success\": {\n      \"type\": \"boolean\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\"\n        },\n        \"userId\": {\n          \"type\": \"string\"\n        },\n        \"date\": {\n          \"type\": \"string\"\n        },\n        \"checkInTime\": {\n          \"type\": \"string\"\n        },\n        \"checkOutTime\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"checkInPhotoUrl\": {\n          \"type\": \"string\"\n        },\n        \"checkOutPhotoUrl\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"createdAt\": {\n          \"type\": \"string\"\n        },\n        \"updatedAt\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "get today attendance",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/api/attendance/today",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"attendance",
+										"today"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "476"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1dc-Jzo1DXjMh+NPWUuGUXi0XNAEH1Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 13 May 2025 09:48:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Today's attendance record retrieved successfully\",\n    \"data\": {\n        \"id\": \"43e556ef-7786-455f-a365-37ce7c463ade\",\n        \"userId\": \"178d4870-a5de-4d7d-bc59-7d562a3e198c\",\n        \"date\": \"2025-05-13T00:00:00.000Z\",\n        \"checkInTime\": \"2025-05-13T03:49:16.415Z\",\n        \"checkOutTime\": null,\n        \"checkInPhotoUrl\": \"http://localhost:3000/public/attendance/35261390-cd2c-4afb-bd0d-47e4b1d125a3.jpg\",\n        \"checkOutPhotoUrl\": null,\n        \"createdAt\": \"2025-05-13T03:49:16.416Z\",\n        \"updatedAt\": \"2025-05-13T03:49:16.416Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
