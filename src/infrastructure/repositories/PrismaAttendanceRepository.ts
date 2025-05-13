@@ -22,20 +22,19 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
             createdAt: prismaAttendance.createdAt,
             updatedAt: prismaAttendance.updatedAt
         };
-    }
-
-    async create(data: CreateAttendanceDTO): Promise<Attendance> {
-        // Get current Jakarta date (for the date field)
-        const todayJakarta = DateUtils.getJakartaDateStart();
+    }    async create(data: CreateAttendanceDTO): Promise<Attendance> {
+        // Get current Jakarta date properly formatted for database
+        const todayJakarta = new Date(DateUtils.getJakartaDateForDB()); 
 
         // Current Jakarta time for check-in
         const nowJakarta = DateUtils.getCurrentJakartaTime();
+
 
         const prismaAttendance = await prisma.attendance.create({
             data: {
                 userId: data.userId,
                 checkInPhotoUrl: data.checkInPhotoUrl,
-                date: todayJakarta,
+                date: todayJakarta, // This will be stored in yyyy-MM-dd format in the database
                 checkInTime: nowJakarta // Server time in Jakarta timezone
             },
         });
@@ -86,11 +85,9 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
         });
 
         return attendances.map(attendance => this._mapToDomainAttendance(attendance));
-    }
-
-    async findTodayAttendanceByUserId(userId: string): Promise<Attendance | null> {
-        // Get today's date in Jakarta timezone
-        const todayJakarta = DateUtils.getJakartaDateStart();
+    }    async findTodayAttendanceByUserId(userId: string): Promise<Attendance | null> {
+        // Get today's date in Jakarta timezone properly formatted for database
+        const todayJakarta = new Date(DateUtils.getJakartaDateForDB());
 
         const attendance = await prisma.attendance.findFirst({
             where: {

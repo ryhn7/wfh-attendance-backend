@@ -1,5 +1,5 @@
 import { format, toZonedTime } from 'date-fns-tz';
-import { parseISO, formatISO } from 'date-fns';
+import { parseISO, formatISO, startOfDay } from 'date-fns';
 
 // Indonesian timezone
 const _TIMEZONE = 'Asia/Jakarta'; // GMT+7
@@ -19,15 +19,26 @@ export class DateUtils {
     static formatToJakartaTime(date: Date, formatPattern: string = 'yyyy-MM-dd HH:mm:ss'): string {
         const jakartaTime = toZonedTime(date, _TIMEZONE);
         return format(jakartaTime, formatPattern, { timeZone: _TIMEZONE });
+    }    /**
+     * Get the start of day in Indonesian timezone
+     * Ensures the date is correct for Jakarta timezone
+     */
+    static getJakartaDateStart(date: Date = new Date()): Date {
+        // Convert to Jakarta timezone first, then get start of day
+        const jakartaDate = toZonedTime(date, _TIMEZONE);
+        const startDay = startOfDay(jakartaDate);
+
+        // Create a Date that won't be affected by timezone conversion
+        return new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate(), 0, 0, 0);
     }
 
     /**
-     * Get the start of day in Indonesian timezone
+     * Get Jakarta date as a formatted string for database storage
+     * Returns date in yyyy-MM-dd format which is standard for database date storage
      */
-    static getJakartaDateStart(date: Date = new Date()): Date {
+    static getJakartaDateForDB(date: Date = new Date()): string {
         const jakartaDate = toZonedTime(date, _TIMEZONE);
-        jakartaDate.setHours(0, 0, 0, 0);
-        return jakartaDate;
+        return format(jakartaDate, 'yyyy-MM-dd', { timeZone: _TIMEZONE });
     }
 
     /**
@@ -73,5 +84,13 @@ export class DateUtils {
         const wholeHours = Math.floor(hours);
         const minutes = Math.round((hours - wholeHours) * 60);
         return `${wholeHours}h ${minutes}m`;
+    }
+
+    /**
+     * Format date to dd-mm-yyyy format
+     */
+    static formatToDateString(date: Date, formatPattern: string = 'dd-MM-yyyy'): string {
+        const jakartaTime = toZonedTime(date, _TIMEZONE);
+        return format(jakartaTime, formatPattern, { timeZone: _TIMEZONE });
     }
 }
