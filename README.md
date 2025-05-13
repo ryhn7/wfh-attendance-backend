@@ -59,28 +59,41 @@ This project follows Clean Architecture principles with the following structure:
    npm run dev
    ```
 
+## API Documentation
+
+### Postman Collection
+
+This project includes a Postman collection file (`Dexa wfh-attendance.postman_collection.json`) that you can import into Postman to test all available endpoints.
+
+### Online Documentation
+
+The complete API documentation is available online at:
+[https://documenter.getpostman.com/view/37536710/2sB2qUmPZD](https://documenter.getpostman.com/view/37536710/2sB2qUmPZD)
+
 ## API Endpoints
 
 ### Authentication
 
-- `POST /api/users/register` - Register a new user
-- `POST /api/users/login` - Login and receive JWT token
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login and receive JWT token
 
 ### Users
 
 - `GET /api/users` - Get all users (Admin only)
+- `GET /api/users/profile` - Get current user profile
 - `GET /api/users/:id` - Get single user
 - `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user (Admin)
+- `DELETE /api/users/:id` - Delete user (Admin only)
 
 ### Attendance Records
 
 - `POST /api/attendance` - Submit a new attendance record with photo
 - `GET /api/attendance` - Get all attendance records (Admin only)
-- `GET /api/attendance/user/:userId` - Get all attendance records for a user
+- `GET /api/attendance/user/:userId` - Get all attendance records for a specific user
+- `GET /api/attendance/me` - Get all attendance records for the current user
 - `GET /api/attendance/:id` - Get a single attendance record
 - `PUT /api/attendance/:id` - Update an attendance record
-- `DELETE /api/attendance/:id` - Delete an attendance record
+- `DELETE /api/attendance/:id` - Delete an attendance record (Admin only)
 
 ## Scripts
 
