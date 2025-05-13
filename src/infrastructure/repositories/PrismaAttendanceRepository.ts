@@ -3,6 +3,7 @@ import { AttendanceRepository } from '../../domain/repositories/AttendanceReposi
 import prisma from '../db/prisma';
 import { Attendance as PrismaAttendance, User as PrismaUser } from '@prisma/client';
 import { DateUtils } from '../../shared/utils/dateUtils';
+import { UserRole } from '@/domain/entities/User';
 
 export class PrismaAttendanceRepository implements AttendanceRepository {
     // Mapper function to convert Prisma Attendance to domain Attendance
@@ -13,6 +14,7 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
             user: prismaAttendance.user ? {
                 name: prismaAttendance.user.name,
                 email: prismaAttendance.user.email,
+                role: prismaAttendance.user.role as unknown as UserRole
             } : undefined,
             date: prismaAttendance.date,
             checkInTime: prismaAttendance.checkInTime,
@@ -22,9 +24,9 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
             createdAt: prismaAttendance.createdAt,
             updatedAt: prismaAttendance.updatedAt
         };
-    }    async create(data: CreateAttendanceDTO): Promise<Attendance> {
+    } async create(data: CreateAttendanceDTO): Promise<Attendance> {
         // Get current Jakarta date properly formatted for database
-        const todayJakarta = new Date(DateUtils.getJakartaDateForDB()); 
+        const todayJakarta = new Date(DateUtils.getJakartaDateForDB());
 
         // Current Jakarta time for check-in
         const nowJakarta = DateUtils.getCurrentJakartaTime();
@@ -79,8 +81,8 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
         });
 
         return attendances.map(attendance => this._mapToDomainAttendance(attendance));
-    }    
-    
+    }
+
     async findTodayAttendanceByUserId(userId: string): Promise<Attendance | null> {
         // Get today's date in Jakarta timezone properly formatted for database
         const todayJakarta = new Date(DateUtils.getJakartaDateForDB());

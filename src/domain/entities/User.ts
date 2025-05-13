@@ -12,6 +12,7 @@ export interface User {
 export interface UserInfo {
     email: string;
     name: string;
+    role: UserRole;
 
 }
 
