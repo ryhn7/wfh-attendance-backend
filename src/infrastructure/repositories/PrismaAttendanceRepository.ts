@@ -85,7 +85,9 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
         });
 
         return attendances.map(attendance => this._mapToDomainAttendance(attendance));
-    }    async findTodayAttendanceByUserId(userId: string): Promise<Attendance | null> {
+    }    
+    
+    async findTodayAttendanceByUserId(userId: string): Promise<Attendance | null> {
         // Get today's date in Jakarta timezone properly formatted for database
         const todayJakarta = new Date(DateUtils.getJakartaDateForDB());
 
