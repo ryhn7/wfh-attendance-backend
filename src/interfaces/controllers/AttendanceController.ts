@@ -8,7 +8,8 @@ import {
     GetAttendanceByUserIdUseCase,
     GetAttendanceByIdUseCase,
     UpdateAttendanceUseCase,
-    GetIncompleteAttendanceUseCase
+    GetIncompleteAttendanceUseCase,
+    GetTodayAttendanceByUserIdUseCase
 } from '../../domain/usecases/AttendanceUseCases';
 import { ApiResponse } from '../../shared/utils/apiResponse';
 
@@ -290,6 +291,45 @@ export class AttendanceController {
             } catch (error) {
                 if (error instanceof Error) {
                     ApiResponse.error(res, error.message);
+                } else {
+                    ApiResponse.serverError(res, 'An unexpected error occurred', error);
+                }
+            }
+        };
+    }
+
+    // Get today's attendance for the authenticated user or specified user (admin only)
+    getTodayAttendanceController() {
+        return async (req: Request, res: Response): Promise<void> => {
+            try {
+                // Use the authenticated user's ID or a specified one if admin
+                let userId = req.user!.id;
+
+                // If admin and userId param provided, use that instead
+                if (req.user?.role === 'ADMIN' && req.query.userId) {
+                    userId = req.query.userId as string;
+                }
+
+                const getTodayAttendanceUseCase = new GetTodayAttendanceByUserIdUseCase(
+                    this._attendanceRepository,
+                    this._userRepository
+                );
+
+                const attendance = await getTodayAttendanceUseCase.execute(userId);
+
+                if (!attendance) {
+                    ApiResponse.success(res, null, 'No attendance record found for today');
+                    return;
+                }
+
+                ApiResponse.success(res, attendance, 'Today\'s attendance record retrieved successfully');
+            } catch (error) {
+                if (error instanceof Error) {
+                    if (error.message === 'User not found') {
+                        ApiResponse.notFound(res, error.message);
+                    } else {
+                        ApiResponse.error(res, error.message);
+                    }
                 } else {
                     ApiResponse.serverError(res, 'An unexpected error occurred', error);
                 }

@@ -201,3 +201,20 @@ export class GetIncompleteAttendanceUseCase {
         return this._attendanceRepository.findIncompleteAttendanceByUserId(userId);
     }
 }
+
+export class GetTodayAttendanceByUserIdUseCase {
+    constructor(
+        private _attendanceRepository: AttendanceRepository,
+        private _userRepository: UserRepository
+    ) { }
+
+    async execute(userId: string): Promise<Attendance | null> {
+        // Verify the user exists
+        const user = await this._userRepository.findById(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        return this._attendanceRepository.findTodayAttendanceByUserId(userId);
+    }
+}

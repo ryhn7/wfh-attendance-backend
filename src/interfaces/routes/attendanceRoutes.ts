@@ -80,6 +80,12 @@ export const createAttendanceRouter = (
         attendanceController.getAttendanceByIdController()
     );
 
+    // Add the new route for getting today's attendance
+    router.get(
+        '/today',
+        attendanceController.getTodayAttendanceController()
+    );
+
     // Error handling for multer (must come after routes that use photoUpload)
     router.use(handleMulterError as ErrorRequestHandler);
 

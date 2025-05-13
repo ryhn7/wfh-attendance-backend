@@ -72,12 +72,6 @@ export class PrismaAttendanceRepository implements AttendanceRepository {
         return this._mapToDomainAttendance(updatedAttendance);
     }
 
-    async delete(id: string): Promise<void> {
-        await prisma.attendance.delete({
-            where: { id },
-        });
-    }
-
     async findAll(): Promise<Attendance[]> {
         const attendances = await prisma.attendance.findMany({
             orderBy: { createdAt: 'desc' },
