@@ -1,52 +1,61 @@
-import { PrismaClient } from '@prisma/client';
-import * as bcrypt from 'bcryptjs';
+import { PrismaClient } from '@prisma/client'
+import * as bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function main() {
-  console.log('Start seeding...');
-  
-  // Hash passwords
-  const adminPassword = await bcrypt.hash('admin123', 10);
-  const employeePassword = await bcrypt.hash('employee123', 10);
-  
-  // Create an admin user
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
-    update: {},
-    create: {
-      email: 'admin@example.com',
-      password: adminPassword,
-      name: 'Admin User',
-      role: 'ADMIN',
-    },
-  });
-  
-  console.log(`Created admin user with id: ${admin.id}`);
-  
-  // Create an employee user
-  const employee = await prisma.user.upsert({
-    where: { email: 'employee@example.com' },
-    update: {},
-    create: {
-      email: 'employee@example.com',
-      password: employeePassword,
-      name: 'Employee User',
-      role: 'EMPLOYEE',
-    },
-  });
-  
-  console.log(`Created employee user with id: ${employee.id}`);
-  
-  console.log('Seeding finished.');
+  console.log('Start seeding...')
+
+  const adminPassword = await bcrypt.hash('admin123', 10)
+  const employeePassword = await bcrypt.hash('employee123', 10)
+
+  // Seed 8 Admin Users
+  for (let i = 1; i <= 8; i++) {
+    const email = `admin${i}@example.com`
+    const name = `Admin ${i}`
+
+    const admin = await prisma.user.upsert({
+      where: { email },
+      update: {},
+      create: {
+        email,
+        password: adminPassword,
+        name,
+        role: 'ADMIN',
+      },
+    })
+
+    console.log(`Created admin user: ${admin.email}`)
+  }
+
+  // Seed 8 Employee Users
+  for (let i = 1; i <= 8; i++) {
+    const email = `employee${i}@example.com`
+    const name = `Employee ${i}`
+
+    const employee = await prisma.user.upsert({
+      where: { email },
+      update: {},
+      create: {
+        email,
+        password: employeePassword,
+        name,
+        role: 'EMPLOYEE',
+      },
+    })
+
+    console.log(`Created employee user: ${employee.email}`)
+  }
+
+  console.log('Seeding finished.')
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
